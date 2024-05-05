@@ -18,19 +18,23 @@ class locationDetail extends StatelessWidget {
           Image.asset('assets/images/lake.jpg',
               width: 600, height: 240, fit: BoxFit.cover),
           SizedBox(height: 15),
-          Row(children: [
-            Column(
+          Container(
+            padding: EdgeInsets.all(24),
+            margin: EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Oeschinen Lake Campground'),
-                Text('Kandersteg, Switzerland'),
-              ],
-            ),
-            SizedBox(
-              width: 21,
-            ),
-            Icon(Icons.star, color: Colors.red),
-            Text('41'),
-          ]),
+              Column(
+                children: [
+                  Text('Oeschinen Lake Campground'),
+                  SizedBox(height: 10),
+                  Text('Kandersteg, Switzerland'),
+                ],
+              ),
+              Icon(Icons.star, color: Colors.red),
+              Text('41'),
+            ]),
+          ),
           SizedBox(height: 15),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
