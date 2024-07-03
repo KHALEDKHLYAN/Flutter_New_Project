@@ -41,7 +41,7 @@ class LocationList extends StatelessWidget {
 
   Widget _itemThumbnail(Location location) {
     return Container(
-      constraints: BoxConstraints.tightFor(width: 70.0),
+      constraints: BoxConstraints.tightFor(width: 100.0),
       child: Image.network(
         location.url,
         fit: BoxFit.fitHeight,
