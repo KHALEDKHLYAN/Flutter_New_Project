@@ -1,87 +1,57 @@
 import 'package:flutter/material.dart';
+import 'models/location.dart';
+import 'styles.dart';
 
-class locationDetail extends StatelessWidget {
-  const locationDetail({super.key});
+class LocationDetail extends StatelessWidget {
+  final Location location;
+
+  LocationDetail(this.location);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: Icon(Icons.account_circle_rounded),
-          backgroundColor: Colors.blue,
-          title: Text('Flutter Layout Demo'),
-          actions: [
-            Icon(Icons.more_vert),
-          ],
-        ),
-        body: Column(children: [
-          Image.asset('assets/images/lake.jpg',
-              width: 600, height: 240, fit: BoxFit.cover),
-          SizedBox(height: 15),
-          Container(
-            padding: EdgeInsets.all(24),
-            margin: EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-              Column(
-                children: [
-                  Text('Oeschinen Lake Campground'),
-                  SizedBox(height: 10),
-                  Text('Kandersteg, Switzerland'),
-                ],
-              ),
-              Icon(Icons.star, color: Colors.red),
-              Text('41'),
-            ]),
-          ),
-          SizedBox(height: 15),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.call, color: Colors.blue),
-                  Text(
-                    'CALL',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.blue,
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  Icon(Icons.rss_feed_outlined, color: Colors.blue),
-                  Text(
-                    'ROUTE',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.blue,
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  Icon(Icons.share, color: Colors.blue),
-                  Text(
-                    'SHARE',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.blue,
-                    ),
-                  ),
-                ],
-              )
-            ],
-          )
-        ]));
+      
+        appBar: AppBar(title: Text(location.name, style: Styles.navBarTitle)),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: _renderBody(context, location),
+        ));
+  }
+
+  List<Widget> _renderBody(BuildContext context, Location location) {
+    var result = <Widget>[];
+    result.add(_bannerImage(location.url, 170.0));
+    result.addAll(_renderFacts(context, location));
+    return result;
+  }
+
+  List<Widget> _renderFacts(BuildContext context, Location location) {
+    var result = <Widget>[];
+    for (int i = 0; i < location.facts.length; i++) {
+      result.add(_sectionTitle(location.facts[i].title));
+      result.add(_sectionText(location.facts[i].text));
+    }
+    return result;
+  }
+
+  Widget _sectionTitle(String text) {
+    return Container(
+        padding: EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 10.0),
+        child:
+            Text(text, textAlign: TextAlign.left, style: Styles.headerLarge));
+  }
+
+  Widget _sectionText(String text) {
+    return Container(
+        padding: EdgeInsets.fromLTRB(25.0, 15.0, 25.0, 15.0),
+        child: Text(text, style: Styles.textDefault));
+  }
+
+  Widget _bannerImage(String url, double height) {
+    return Container(
+      constraints: BoxConstraints.tightFor(height: height),
+      child: Image.network(url, fit: BoxFit.fitWidth),
+    );
   }
 }
